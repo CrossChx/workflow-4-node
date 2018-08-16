@@ -110,7 +110,7 @@ describe("Loops", function () {
                 function (result) {
                     assert(_.isObject(result));
                     assert.equal(result.v, "1086");
-                    assert.equal(result.r, "complete");
+                    assert.equal(result.r, "1086");
                 }).nodeify(done);
         });
     });
