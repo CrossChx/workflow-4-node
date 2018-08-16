@@ -48,6 +48,39 @@ describe("expressions", function () {
                 }).nodeify(done);
         });
 
+        it("should be able to reassign an undefined variable", function (done) {
+          let block = activityMarkup.parse(
+            {
+              "@block": {
+                v: null,
+                args: [
+                  {
+                    "@func": {
+                      code: function() {
+                        this.v = undefined;
+                      }
+                    }
+                  },
+                  {
+                    "@func": {
+                      code: function() {
+                        this.v = 4;
+                        return this.v;
+                      }
+                    }
+                  }
+                ]
+              }
+            });
+
+          let engine = new ActivityExecutionEngine(block);
+
+          engine.invoke().then(
+            function (result) {
+              assert.equal(result, 4);
+            }).nodeify(done);
+        });
+
         it("should access parent", function (done) {
             let block = activityMarkup.parse(
                 {
